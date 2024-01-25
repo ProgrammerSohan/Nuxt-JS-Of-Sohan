@@ -1,13 +1,10 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-//npm install --save-dev @nuxt/content
-//npm i
-//import { defineNuxtConfig } from 'nuxt3'
+// nuxt.config.ts
+//import { defineNuxtConfig } from 'nuxt';
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules:[ 
-  '@nuxtjs/tailwindcss',
-  '@nuxt/content' 
-
-]
-
-})
+  modules: [
+    '@nuxtjs/tailwindcss',
+    //'nuxt-content',
+  ],
+});
