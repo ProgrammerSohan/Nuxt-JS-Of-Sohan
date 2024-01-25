@@ -7,12 +7,17 @@
     <hr>
     <div class="carousel">
       <div class="image-container">
-        <img id="carouselImage" :src="getImagePath()" alt="Carousel Image" />
+        <img
+          id="carouselImage"
+          :src="getImagePath()"
+          alt="Carousel Image"
+          ref="zoomImage"
+          @click="zoomImage"
+        />
         <div class="info-container">
           <h2>{{ getTitle() }}</h2>
           <p><a :href="getGitHubLink()" target="_blank">GitHub Link</a></p>
           <p><a :href="getVideoLink()" target="_blank">Video Link</a></p>
-         
           <p>Image Number: {{ currentIndex + 1 }}</p>
           <p>Description: {{ getDescription() }}</p>
         </div>
@@ -21,9 +26,11 @@
       <button @click="nextImage">Next</button>
     </div>
   </div>
-</template> 
+</template>
 
 <script>
+import mediumZoom from 'medium-zoom';
+
 export default {
   data() {
     return {
@@ -43,23 +50,16 @@ export default {
           videoLink: 'https://www.youtube.com/watch?v=yourvideo2',
           description: 'This is the description for Cute Cat 2.',
         },
-        {
-          src: 'cat-9.png',
-          title: 'Cute Cat 3',
-          githubLink: 'https://github.com/yourusername/project3',
-          videoLink: 'https://www.youtube.com/watch?v=yourvideo3',
-          description: 'This is the description for Cute Cat 3.',
-        },
-        {
-          src: 'pic1.jpg',
-          title: 'Cute Cat 4',
-          githubLink: 'https://github.com/yourusername/project4',
-          videoLink: 'https://www.youtube.com/watch?v=yourvideo4',
-          description: 'This is the description for Cute Cat 4.',
-        },
         // Add more image objects as needed
       ],
+      zoom: null,
     };
+  },
+  mounted() {
+    // Initialize medium-zoom on the image
+    this.zoom = mediumZoom(this.$refs.zoomImage, {
+      margin: 24, // Adjust the zoomed-in margin as needed
+    });
   },
   methods: {
     getImagePath() {
@@ -83,6 +83,9 @@ export default {
     nextImage() {
       this.currentIndex = (this.currentIndex + 1) % this.images.length;
     },
+    zoomImage() {
+      this.zoom.show();
+    },
   },
 };
 </script>
@@ -101,6 +104,7 @@ export default {
 #carouselImage {
   width: 100%;
   height: auto;
+  cursor: pointer;
 }
 
 button {
@@ -125,5 +129,8 @@ button {
 h2 {
   margin: 0;
 }
+/*npm install medium-zoom
+npm run dev
 
+*/
 </style>
